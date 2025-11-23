@@ -1,9 +1,23 @@
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class Config():
+class Settings(BaseSettings):
+
+    APP_NAME: str = "pos-backend"
+    APP_ENV: str = "development"
+
     DATABASE_URL: str
+
     REDIS_URL: str
+
     JWT_SECRET_KEY: str
+    JWT_EXPIRES_MINUTES: int = 60
+
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore"
+    )
 
 
-# Pydantic BaseSettings kullanılacak.
+settings = Settings()

@@ -163,3 +163,28 @@ içinde toplar.
     6- Geri almak da mümkündür(downgrade) upgrade -> ileri sar downgrade -> geri al
 
 Özetle Migration = Model değişikliklerini → SQL değişikliklerine dönüştüren, bunları sırayla veritabanına uygulayan bir versiyon kontrol mekanizmasıdır.
+
+# Database Schema Tasarımı
+
+1-User Tablosunun Amacı
+POS cihazına giriş yapacak kullanıcıların kimlik bilgilerini, aktiflik durumunu ve oluşturulma/zaman bilgilerini saklamak için kullanılır. Kimlik doğrulama ve yetkilendirme süreçlerinin temelini oluşturur. Soft delete kullanıldı
+
+2-Payment Tablosunun Amacı
+Sistemde mevcut olan ödeme türlerini tanımlar. Her ödeme tipi için isim, para birimi, durum ve oluşturulma zamanı saklanır. POS'un hangi ödeme türleriyle işlem yapabileceğini belirler.
+
+3-Transaction Tablosunun Amacı
+POS cihazından gelen ödeme işlemlerini kaydeder. Kullanıcı, ödeme tipi, tutar, para birimi, işlem durumu ve POS referans numarası gibi bilgiler içerir. Kasa mutabakatı ve raporlama süreçlerinin ana veri kaynağıdır.
+
+
+4-ENUM - STRING KARARLARI
+- String Veritabanında değer yazı olarak saklanır. Yani her şeyi yazabiliriz Db seni durdurmaz 
+- Enum: Veri tabanına emir veriyorsun "Bu alan sadece şu değerlerden biri olabilir"  örnek ENUM("cash","card") Yani başka bir şey yazamazsın 
+- Projede Veritabanında enum kullanılmadı backend tarafında enum ile doğrulama yapıldı. Migration problemlerinden kaçıldı 
+
+5-Float vs Decimal
+- Float : Kesin değil, yaklaşık deper saklanır
+- Decimal: Kesin doğruluk gerektiren değerler içindir.
+
+NOT : Float işlemler daha hızlıdır hafızada binary olarak tutlur.Depolama formatı decimal yani 10 tabanlıdır. yavaş ama güvenli
+
+
