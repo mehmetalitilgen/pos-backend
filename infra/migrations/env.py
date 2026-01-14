@@ -3,6 +3,10 @@ from app.core.config import settings #
 from app.db.base import Base #
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
+from app.models.user import User
+from app.models.payment import Payment
+from app.models.transaction import Transaction
+
 
 from alembic import context
 
